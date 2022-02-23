@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="action_retry">Retry</string>
+    <string name="toast_error">Error, please retry</string>
+</resources>
