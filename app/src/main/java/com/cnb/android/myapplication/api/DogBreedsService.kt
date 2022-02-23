@@ -3,6 +3,7 @@ package com.cnb.android.myapplication.api
 import com.cnb.android.myapplication.data.ListAllBreedsResponse
 import com.cnb.android.myapplication.data.RandomImageResponse
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -14,14 +15,24 @@ interface DogBreedsService {
     suspend fun listAllBreeds(): ListAllBreedsResponse
 
     @GET("breed/{name}/images/random")
-    suspend fun randomImageUrlForDogBreed(@Path("name") dogBreedName: String): RandomImageResponse
+    suspend fun randomImageUrlForDogBreed(
+        @Path(
+            "name",
+            encoded = true
+        ) dogBreedName: String
+    ): RandomImageResponse
 
     companion object {
         private const val BASE_URL = "https://dog.ceo/api/"
 
         fun create(): DogBreedsService {
-            val client = OkHttpClient.Builder()
-                .build()
+            val interceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY
+            }
+
+            val client: OkHttpClient = OkHttpClient.Builder().apply {
+                addInterceptor(interceptor)
+            }.build()
 
             return Retrofit.Builder()
                 .baseUrl(BASE_URL)
