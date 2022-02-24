@@ -36,7 +36,7 @@ class DetailActivity : AppCompatActivity() {
         dogBreedKey = intent.getStringExtra(EXTRA_DOG_BREED_KEY) ?: ""
 
         viewModel.dogBreedImageUrl.observe(this) {
-            binding.progressHorizontal.progressHorizontal.visibility = View.GONE
+            binding.progressHorizontal.root.visibility = View.GONE
             if (it.isNullOrEmpty()) {
                 Toast.makeText(this, R.string.toast_error, Toast.LENGTH_SHORT).show()
             } else {
@@ -68,7 +68,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun fetchData() {
-        binding.progressHorizontal.progressHorizontal.visibility = View.VISIBLE
+        binding.progressHorizontal.root.visibility = View.VISIBLE
         viewModel.fetchRandomImageOfDogBreed(dogBreedKey)
     }
 }

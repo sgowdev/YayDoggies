@@ -26,7 +26,7 @@ class ListActivity : AppCompatActivity() {
         val adapter = DogAdapter(this)
         binding.list.adapter = adapter
         viewModel.dogBreeds.observe(this) { dogBreeds ->
-            binding.progressHorizontal.progressHorizontal.visibility = View.GONE
+            binding.progressHorizontal.root.visibility = View.GONE
             if (dogBreeds.success) {
                 adapter.submitList(dogBreeds.dogBreeds)
             } else {
@@ -54,7 +54,7 @@ class ListActivity : AppCompatActivity() {
     }
 
     private fun fetchData() {
-        binding.progressHorizontal.progressHorizontal.visibility = View.VISIBLE
+        binding.progressHorizontal.root.visibility = View.VISIBLE
         viewModel.getListOfDogBreeds()
     }
 }
